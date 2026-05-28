@@ -42,8 +42,17 @@ src/
   Page2.jsx         Strategy Generator
   Page3.jsx         Budget Scenario Planner
   Page4.jsx         Campaign Performance
+  EmailBriefing.jsx Send-Briefing composer (auto-summary → Overmind send)
   AppDesktop.jsx    shell: nav + snap-scroll + WebGL + terminal
+server/             Overmind-traced backend (Express) — Send Briefing API
 ```
+
+## Backend
+
+The **Send Briefing** action routes through an Overmind-traced Express backend
+in `server/` (draft → deliver, with the trace replayed into the terminal). It
+runs with zero config (Claude skipped, sends simulated). See `server/README.md`
+and `EMAIL_BRIEFING.md`.
 
 ## Notes
 

@@ -1,0 +1,18 @@
+{
+  "name": "signal-backend",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "SIGNAL — Overmind-traced API (send-briefing + agent endpoints)",
+  "scripts": {
+    "dev": "node --watch index.js",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "nodemailer": "^6.9.15"
+  }
+}

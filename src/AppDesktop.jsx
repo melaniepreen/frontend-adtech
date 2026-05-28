@@ -7,7 +7,7 @@ function Clock() {
   return <span className="tnum" style={{ fontSize: 11, color: "#888" }}>{t}</span>;
 }
 
-function Nav({ pages, active, onJump }) {
+function Nav({ pages, active, onJump, onBrief }) {
   return (
     <div style={{ flex: "none", height: 52, display: "flex", alignItems: "center", gap: 0, padding: "0 18px",
       borderBottom: "1px solid #1F1F1F", background: "#080808", zIndex: 40 }}>
@@ -26,7 +26,13 @@ function Nav({ pages, active, onJump }) {
           </button>
         )}
       </div>
-      <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 16 }}>
+      <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 14 }}>
+        <button onClick={onBrief} title="Email a findings summary to the sales & ad-strategy team"
+          style={{ display: "flex", alignItems: "center", gap: 7, fontFamily: "var(--mono)", fontSize: 10.5, letterSpacing: ".08em",
+            textTransform: "uppercase", padding: "7px 12px", borderRadius: 3, cursor: "pointer",
+            background: "rgba(0,212,255,.08)", border: "1px solid rgba(0,212,255,.4)", color: "#00D4FF" }}>
+          <span style={{ fontSize: 12 }}>✉</span>Send Briefing
+        </button>
         <span className="pill" style={{ color: "#00FF88", background: "rgba(0,255,136,.1)" }}><span className="dot active" style={{ width: 6, height: 6 }}></span>LIVE</span>
         <Clock />
       </div>
@@ -55,6 +61,7 @@ function Placeholder({ name }) {
 function AppDesktop() {
   const { pages } = window.ADTEC;
   const [active, setActive] = useSA(0);
+  const [briefOpen, setBriefOpen] = useSA(false);
   const scrollerRef = useRA(null);
   const glRef = useRA(null);
   const jumpRef = useRA(() => {});
@@ -149,7 +156,7 @@ function AppDesktop() {
     <div style={{ position: "fixed", inset: 0, display: "flex", flexDirection: "column", background: "#000" }}>
       <canvas ref={glRef} style={{ position: "fixed", inset: 0, zIndex: 0, opacity: .55 }}></canvas>
       <div style={{ position: "fixed", inset: 0, zIndex: 0, background: "radial-gradient(120% 80% at 50% -10%, rgba(0,212,255,.06), transparent 60%)" }}></div>
-      <Nav pages={pages} active={active} onJump={jump} />
+      <Nav pages={pages} active={active} onJump={jump} onBrief={() => setBriefOpen(true)} />
       <div ref={scrollerRef} className="scroller" style={{ position: "relative", zIndex: 10, flex: 1, overflow: "hidden", minHeight: 0 }}>
         {pages.map((p) =>
         <section key={p.id} className="snap-section" data-screen-label={p.title} style={{ height: "100%",
@@ -163,6 +170,7 @@ function AppDesktop() {
         )}
       </div>
       <Terminal mode="flow" defaultOpen={true} heightPct={20} />
+      {briefOpen && window.EmailBriefing && <EmailBriefing onClose={() => setBriefOpen(false)} />}
     </div>);
 
 }
